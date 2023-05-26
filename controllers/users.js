@@ -20,7 +20,7 @@ const registerUser = async (req, res) => {
 
     res.status(200).json(user)
 }
-// POST request that handles register
+// POST request that handles login
 const loginUser = async (req, res) => {
     try {
         const {username, password} = req.body
@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
             // Create token
             const token = jwt.sign(
                 { user_id: user._id, username },
-                process.env.TOKEN_KEY,
+                process.env.SECRET_KEY,
                 {
                 expiresIn: "2h",
                 }
@@ -59,8 +59,13 @@ const loginUser = async (req, res) => {
     }
 }
 
+//Authorization testing
+const welcome = async (req, res) => {
+    res.status(200).send("Welcome 🙌 ");
+};
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    welcome
 }
