@@ -22,6 +22,14 @@ const postProducts = async (req, res) => {
     res.status(200).json(product)
 }
 
+const getAllProducts = async (req, res) => {
+    const products = await prisma.products.findMany({
+    })
+    res.status(200).json(products)
+}
+
+
 module.exports = {
-    postProducts
+    postProducts,
+    getAllProducts
 }
