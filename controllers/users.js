@@ -30,16 +30,16 @@ const loginUser = async (req, res) => {
         }
 
         // Validate if user exist in our database
-        const user = await prisma.users.findUnique({
+        const user = await prisma.users.findFirst({
             where: {
-                id: 1
+                username: username
             },
         });
 
         if (user && (await bcrypt.compare(password, user.password))) {
             // Create token
             const token = jwt.sign(
-                { user_id: user._id, username },
+                { user_id: user.id, username },
                 process.env.SECRET_KEY,
                 {
                 expiresIn: "2h",

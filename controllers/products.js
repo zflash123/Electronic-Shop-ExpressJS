@@ -4,20 +4,24 @@ const prisma = new PrismaClient()
 
 // POST request that handles products
 const postProducts = async (req, res) => {
-    const {name, stock, description} = req.body
+    const {name, description, stock, price} = req.body
 
-    const user = await prisma.users.create({
+    const token = req.get('Authorization')
+    const token_object = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
+
+    const product = await prisma.products.create({
         data: {
           name: name,
-          stock: stock,
           description: description,
+          stock: stock,
+          price: price,
+          user_id: token_object.user_id
         },
     })
 
-    res.status(200).json(user)
+    res.status(200).json(product)
 }
 
 module.exports = {
-    postProducts,
-    
+    postProducts
 }
