@@ -4,7 +4,8 @@ const {postProducts, getProductById, getAllProducts} = require('../controllers/p
 
 router.post('/products', postProducts)
 router.get('/products', getAllProducts)
-// router.get('/products/:tagId', getProductById)
+router.get('/products/:tagId', getProductById)
+
 
 
 module.exports = router

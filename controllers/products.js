@@ -28,8 +28,17 @@ const getAllProducts = async (req, res) => {
     res.status(200).json(products)
 }
 
+const getProductById = async (req, res) => {
+    const products = await prisma.products.findUnique({
+        where: {
+            id: parseInt(req.params.tagId)
+        }
+    })
+    res.status(200).json(products)
+}
 
 module.exports = {
     postProducts,
-    getAllProducts
+    getAllProducts,
+    getProductById
 }
