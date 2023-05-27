@@ -6,19 +6,28 @@ const prisma = new PrismaClient()
 
 // POST request that handles register
 const registerUser = async (req, res) => {
-    const {name, username, email, password} = req.body
-    hashedPassword = await bcrypt.hash(password, 10);
+    try{
+        const {name, username, email, password} = req.body
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await prisma.users.create({
-        data: {
-          name: name,
-          email: email,
-          username: username,
-          password: hashedPassword,
-        },
-    })
+        if(name&&username&&email&&password){
+            const user = await prisma.users.create({
+                data: {
+                    name: name,
+                    email: email,
+                    username: username,
+                    password: hashedPassword,
+                },
+            })
+            res.status(201).json(user)
+        } else{
+            res.status(400).json({message: "There is field that empty"})
+        }
 
-    res.status(200).json(user)
+        
+    }catch (err) {
+        res.status(500).send({ "error": `${err}` })
+    }
 }
 // POST request that handles login
 const loginUser = async (req, res) => {
@@ -42,7 +51,7 @@ const loginUser = async (req, res) => {
                 { user_id: user.id, username },
                 process.env.SECRET_KEY,
                 {
-                expiresIn: "2h",
+                expiresIn: "12h",
                 }
             );
 
@@ -55,17 +64,16 @@ const loginUser = async (req, res) => {
             res.status(400).send("Invalid Credentials");
         }
     } catch (err) {
-        console.log(err);
+        res.status(500).send({ "error": `${err}` })
     }
 }
 
-//Authorization testing
-const welcome = async (req, res) => {
-    res.status(200).send("Welcome 🙌 ");
+const logoutUser = async (req, res) => {
+    res.status(200).json({message: "logout successful"})
 };
 
 module.exports = {
     registerUser,
     loginUser,
-    welcome
+    logoutUser
 }
