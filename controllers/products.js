@@ -57,7 +57,7 @@ const putProducts = async (req, res) => {
         const token_object = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
 
         //Generate new datetime
-        const dateNow = new Date(Date.now()).toISOString()
+        const dateTimeNow = new Date(Date.now()).toISOString()
         const product = await prisma.products.update({
             where: {
               id: id,
@@ -68,7 +68,7 @@ const putProducts = async (req, res) => {
                 stock: stock,
                 price: price,
                 user_id: token_object.user_id,
-                updated_at: dateNow
+                updated_at: dateTimeNow
             },
         })
 
