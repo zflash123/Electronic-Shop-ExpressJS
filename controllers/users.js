@@ -10,6 +10,26 @@ const registerUser = async (req, res) => {
         const {name, username, email, password} = req.body
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        //check if username exist
+        const usernameCheck = await prisma.users.findFirst({
+            where: {
+                username: username
+            }
+        })
+        if(usernameCheck){
+            res.status(409).json({ message: "username already exist"})
+        }
+
+        //check if email exist
+        const emailCheck = await prisma.users.findFirst({
+            where: {
+                email: email
+            }
+        })
+        if(emailCheck){
+            res.status(409).json({ message: "email alreadys exist"})
+        }
+
         if(name&&username&&email&&password){
             const user = await prisma.users.create({
                 data: {
@@ -69,7 +89,7 @@ const loginUser = async (req, res) => {
 }
 
 const logoutUser = async (req, res) => {
-    res.status(200).json({message: "logout successful"})
+    res.status(200).json({message: "logout successful"});
 };
 
 module.exports = {
