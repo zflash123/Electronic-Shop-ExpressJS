@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
             }
         })
         if(usernameCheck){
-            res.status(409).json({ message: "username already exist"})
+            return res.status(409).json({ message: "username already exist"})
         }
 
         //check if email exist
@@ -27,7 +27,7 @@ const registerUser = async (req, res) => {
             }
         })
         if(emailCheck){
-            res.status(409).json({ message: "email alreadys exist"})
+            return res.status(409).json({ message: "email alreadys exist"})
         }
 
         if(name&&username&&email&&password){
@@ -39,14 +39,14 @@ const registerUser = async (req, res) => {
                     password: hashedPassword,
                 },
             })
-            res.status(201).json(user)
+            return res.status(201).json(user)
         } else{
-            res.status(400).json({message: "There is field that empty"})
+            return res.status(400).json({message: "There is field that empty"})
         }
 
         
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 }
 // POST request that handles login
@@ -55,7 +55,7 @@ const loginUser = async (req, res) => {
         const {username, password} = req.body
         
         if(!(username&&password)){
-            res.status(400).send("All input is required");
+            return res.status(400).send("All input is required");
         }
 
         // Validate if user exist in our database
@@ -79,17 +79,17 @@ const loginUser = async (req, res) => {
             user.token = token;
 
             // user
-            res.status(200).json(user);
+            return res.status(200).json(user);
         } else{
-            res.status(400).json({ "message": "Invalid Credentials" });
+            return res.status(400).json({ "message": "Invalid Credentials" });
         }
     } catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 }
 
 const logoutUser = async (req, res) => {
-    res.status(200).json({message: "Logout successful"});
+    return res.status(200).json({message: "Logout successful"});
 };
 
 const updateUser = async (req, res) => {
@@ -97,7 +97,7 @@ const updateUser = async (req, res) => {
         const {name} = req.body
 
         if(!name){
-            res.status(400).json({message: "Name field is empty"})
+            return res.status(400).json({message: "Name field is empty"})
         }
 
         const token = req.get('Authorization')
@@ -114,9 +114,9 @@ const updateUser = async (req, res) => {
             }
         })
     
-        res.status(200).json(user)
+        return res.status(200).json(user)
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 };
 
@@ -124,16 +124,6 @@ const deleteUser = async (req, res) => {
     try{
         const token = req.get('Authorization')
         const token_object = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
-
-        const findUser = await prisma.users.findUnique({
-            where: {
-                id: token_object.user_id
-            }
-        })
-
-        if(!findUser){
-            res.status(200).json({ message: `There is no account with id '${token_object.user_id}'` })
-        }
         
         const product = await prisma.products.updateMany({
             where: {
@@ -151,9 +141,9 @@ const deleteUser = async (req, res) => {
         })
         
     
-        res.status(200).json({ message: `Your account with username ${user.username} been deleted` })
+        return res.status(200).json({ message: `Your account with username ${user.username} been deleted` })
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 };
 
