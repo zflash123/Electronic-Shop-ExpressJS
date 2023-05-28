@@ -20,9 +20,9 @@ const postProducts = async (req, res) => {
             },
         })
 
-        res.status(201).json(product)
+        return res.status(201).json(product)
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 }
 
@@ -30,9 +30,9 @@ const getAllProducts = async (req, res) => {
     try{
         const products = await prisma.products.findMany({
         })
-        res.status(200).json(products)
+        return res.status(200).json(products)
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 }
 
@@ -43,9 +43,9 @@ const getProductById = async (req, res) => {
                 id: parseInt(req.params.id)
             }
         })
-        res.status(200).json(products)
+        return res.status(200).json(products)
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 }
 
@@ -72,9 +72,9 @@ const putProducts = async (req, res) => {
             },
         })
 
-        res.status(200).json(product)
+        return res.status(200).json(product)
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 }
 
@@ -88,9 +88,9 @@ const deleteProducts = async (req, res) => {
             }
         })
     
-        res.status(200).json({ message: "Product has been deleted" })
+        return res.status(200).json({ message: "Product has been deleted" })
     }catch (err) {
-        res.status(500).send({ "error": `${err}` })
+        return res.status(500).send({ "error": `${err}` })
     }
 }
 module.exports = {
