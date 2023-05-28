@@ -1,4 +1,4 @@
-# Nusatala Backend Projects
+# Electronic Shop Backend Project
 ## Design Pattern that I use
 In this project I use MVC as my project's design pattern  
 
