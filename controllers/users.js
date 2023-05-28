@@ -92,8 +92,75 @@ const logoutUser = async (req, res) => {
     res.status(200).json({message: "Logout successful"});
 };
 
+const updateUser = async (req, res) => {
+    try{
+        const {name} = req.body
+
+        if(!name){
+            res.status(400).json({message: "Name field is empty"})
+        }
+
+        const token = req.get('Authorization')
+        const token_object = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
+        const dateTimeNow = new Date(Date.now()).toISOString()
+
+        const user = await prisma.users.update({
+            where: {
+                id: token_object.user_id
+            },
+            data: {
+                name: name,
+                updated_at: dateTimeNow
+            }
+        })
+    
+        res.status(200).json(user)
+    }catch (err) {
+        res.status(500).send({ "error": `${err}` })
+    }
+};
+
+const deleteUser = async (req, res) => {
+    try{
+        const token = req.get('Authorization')
+        const token_object = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
+
+        const findUser = await prisma.users.findUnique({
+            where: {
+                id: token_object.user_id
+            }
+        })
+
+        if(!findUser){
+            res.status(200).json({ message: `There is no account with id '${token_object.user_id}'` })
+        }
+        
+        const product = await prisma.products.updateMany({
+            where: {
+                user_id: token_object.user_id
+            },
+            data: {
+                user_id: null
+            }
+        })
+
+        const user = await prisma.users.delete({
+            where: {
+                id: token_object.user_id
+            }
+        })
+        
+    
+        res.status(200).json({ message: `Your account with username ${user.username} been deleted` })
+    }catch (err) {
+        res.status(500).send({ "error": `${err}` })
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    updateUser,
+    deleteUser
 }
