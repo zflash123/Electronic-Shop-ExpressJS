@@ -81,7 +81,7 @@ const loginUser = async (req, res) => {
             // user
             res.status(200).json(user);
         } else{
-            res.status(400).send("Invalid Credentials");
+            res.status(400).json({ "message": "Invalid Credentials" });
         }
     } catch (err) {
         res.status(500).send({ "error": `${err}` })
@@ -89,7 +89,7 @@ const loginUser = async (req, res) => {
 }
 
 const logoutUser = async (req, res) => {
-    res.status(200).json({message: "logout successful"});
+    res.status(200).json({message: "Logout successful"});
 };
 
 module.exports = {
