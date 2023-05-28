@@ -1,21 +1,21 @@
 {
-  "name": "express-js-nusatala",
+  "name": "toko-elektronik-express",
   "version": "1.0.0",
-  "description": "Nusatala Cloud Computing Projects",
+  "description": "Aplikasi Toko Elektronik menggunakan Framework Express JS",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nusatala/CC.git"
+    "url": "git+https://github.com/zflash123/toko-elektronik-express.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Nusatala/CC/issues"
+    "url": "https://github.com/zflash123/toko-elektronik-express/issues"
   },
-  "homepage": "https://github.com/Nusatala/CC#readme",
+  "homepage": "https://github.com/zflash123/toko-elektronik-express#readme",
   "devDependencies": {
     "nodemon": "^2.0.22",
     "prisma": "^4.14.1"

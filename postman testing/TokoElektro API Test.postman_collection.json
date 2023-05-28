@@ -1,0 +1,530 @@
+{
+	"info": {
+		"_postman_id": "b7669e38-3005-49f6-8e09-f6dc090eb2be",
+		"name": "TokoElektro API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13764358"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 201', () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('id');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('name');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('username');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('email');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('password');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('created_at');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('updated_at');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4111/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set('jwt_token', responseJson.token);\r",
+							"\r",
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('id');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('name');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('username');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('email');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('password');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('created_at');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('updated_at');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('token');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4111/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set('product_id', responseJson.id);\r",
+							"\r",
+							"pm.test('status code should be 201', () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('id');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('name');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('description');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('stock');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('price');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('created_at');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('updated_at');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{product_name}}\",\r\n    \"description\": \"{{product_description}}\",\r\n    \"stock\": {{product_stock}},\r\n    \"price\": {{product_price}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4111/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an array', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson[0]).to.haveOwnProperty('id');\r",
+							"    pm.expect(responseJson[0]).to.haveOwnProperty('name');\r",
+							"    pm.expect(responseJson[0]).to.haveOwnProperty('description');\r",
+							"    pm.expect(responseJson[0]).to.haveOwnProperty('stock');\r",
+							"    pm.expect(responseJson[0]).to.haveOwnProperty('price');\r",
+							"    pm.expect(responseJson[0]).to.haveOwnProperty('created_at');\r",
+							"    pm.expect(responseJson[0]).to.haveOwnProperty('updated_at');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4111/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('id');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('name');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('description');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('stock');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('price');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('created_at');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('updated_at');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4111/products/{{product_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('id');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('name');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('description');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('stock');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('price');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('created_at');\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('updated_at');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{update_product_name}}\",\r\n    \"description\": \"{{product_description}}\",\r\n    \"stock\": {{product_stock}},\r\n    \"price\": {{update_product_price}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4111/products/{{product_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson.message).to.equals('Product has been deleted');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:4111/products/{{product_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('status code should be 200', () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('response header Content-Type should be application/json', () => {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should be an object', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test('response body should have correct property and value', () => {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    pm.expect(responseJson).to.haveOwnProperty('message');\r",
+							"    pm.expect(responseJson.message).to.equals('Logout successful');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4111/users/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4111",
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
