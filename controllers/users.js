@@ -141,7 +141,7 @@ const deleteUser = async (req, res) => {
         })
         
     
-        return res.status(200).json({ message: `Your account with username ${user.username} been deleted` })
+        return res.status(200).json({ message: `Your account with username ${user.username} has been deleted` })
     }catch (err) {
         return res.status(500).send({ "error": `${err}` })
     }

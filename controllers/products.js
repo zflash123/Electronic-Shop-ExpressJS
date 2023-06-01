@@ -5,18 +5,21 @@ const prisma = new PrismaClient()
 // POST request that handles products
 const postProducts = async (req, res) => {
     try{
-        const {name, description, stock, price} = req.body
+        const {name, thumbnail, description, price, stock, link, rating} = req.body
 
         const token = req.get('Authorization')
         const token_object = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
 
         const product = await prisma.products.create({
             data: {
-                name: name,
-                description: description,
-                stock: stock,
-                price: price,
                 user_id: token_object.user_id,
+                name: name,
+                thumbnail: thumbnail,
+                description: description,
+                price: price,
+                stock: stock,
+                link: link,
+                rating: rating
             },
         })
 
@@ -51,7 +54,7 @@ const getProductById = async (req, res) => {
 
 const putProducts = async (req, res) => {
     try{
-        const {name, description, stock, price} = req.body
+        const {name, thumbnail, description, price, stock, link, rating} = req.body
         const id = parseInt(req.params.id)
         const token = req.get('Authorization')
         const token_object = JSON.parse(Buffer.from(token.split('.')[1], 'base64'));
@@ -63,11 +66,14 @@ const putProducts = async (req, res) => {
               id: id,
             },
             data: {
-                name: name,
-                description: description,
-                stock: stock,
-                price: price,
                 user_id: token_object.user_id,
+                name: name,
+                thumbnail: thumbnail,
+                description: description,
+                price: price,
+                stock: stock,
+                link: link,
+                rating: rating,
                 updated_at: dateTimeNow
             },
         })
@@ -82,7 +88,15 @@ const deleteProducts = async (req, res) => {
     try{
         const id = parseInt(req.params.id)
 
-        const product = await prisma.products.delete({
+        await prisma.products.update({
+            where: {
+                id: id
+            },
+            data: {
+                user_id: null
+            }
+        })
+        await prisma.products.delete({
             where: {
                 id: id
             }
