@@ -28,5 +28,5 @@ Beside of that, the route, controller, middleware and model is divided into diff
 ## For testing API
 If you want to test this project API, I have created e2e testing using postman
 1. Open postman and create new workspace
-2. Click the import button(in left of your workspace name)
+2. Click the import button(in the right of your workspace name)
 3. Import two file from this project located in "postman testing" folder
